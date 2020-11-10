@@ -21,11 +21,9 @@ function Get-Bearer-Token {
   $headers.Add("Accept", "application/json")
   $headers.Add("Content-Type", "application/x-www-form-urlencoded")
   $response = Invoke-RestMethod "$OKTA_URI_WITH_PARAMS" -Method "POST" -Headers $headers -Body $body
-  Write-Host '---------------------------------------------------------------------------------------------------------------------'
-  Write-Host 'The latest bearer token used to authenticate with the AB2D API (expires in 1 hour)'
-  Write-Host '---------------------------------------------------------------------------------------------------------------------'
-  Write-Host $response.access_token
-  Write-Host ''
+  if ($response.access_token) {
+    Write-Host 'Received access token that was not null'
+  }
   return $response.access_token
 }
 
