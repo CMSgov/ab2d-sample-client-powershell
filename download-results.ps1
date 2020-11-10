@@ -8,6 +8,8 @@ if (-NOT (TEST-PATH -PATH $AUTH_FILE))
   exit
 }
 
+$JOB_RESULTS = Get-Content -Path 'complete_job_response.json' | select -Last 1
+
 $AUTH = Get-Content $AUTH_FILE
 $AUTH = $AUTH.Trim()
 
@@ -30,7 +32,6 @@ function Get-Bearer-Token {
 # Set API variables
 
 $OKTA_URI_WITH_PARAMS = "$AUTHENTICATION_URL`?grant_type=client_credentials&scope=clientCreds"
-$EXPORT_URL = "$AB2D_API_URL/v1/fhir/Patient/`$export`?_outputFormat=application%2Ffhir%2Bndjson&_type=ExplanationOfBenefit"
 
 # Get number of files, first file index, and last file index
 
@@ -52,16 +53,18 @@ while ($FILE_INDEX -ne ($LAST_FILE_INDEX + 1)) {
   if (TEST-PATH -PATH $FILE)
   {
     Write-Host "$FILE already exists will not override"
-  } else 
+  } else
   {
     Write-Host '---------------------------------------------------------------------------------------------------------------------'
     Write-Host "File URL: $($FILE_URL)"
     Write-Host "Downloading $($FILE)..."
     Write-Host '---------------------------------------------------------------------------------------------------------------------'
     Write-Host ''
+
     $client = New-Object System.Net.WebClient
     $client.headers["Authorization"] = "Bearer $BEARER_TOKEN"
     $client.headers["Accept"] = "application/fhir+ndjson"
+
     try {
       Add-Content -Path $FILE -Value $client.DownloadString("$FILE_URL")
     } catch [System.Net.WebException] {
