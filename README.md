@@ -94,7 +94,7 @@ These scripts must be run in order to complete a download.
     
    ```ShellSession
    $BASE64_ENCODED_ID_PASSWORD='{Base64-encoded id:password}'
-   Set-Content -Path auth-crendentials.base64 $BASE64_ENCODED_ID_PASSWORD
+   Set-Content -Path auth-credentials.base64 $BASE64_ENCODED_ID_PASSWORD
    ```
 
 1. Set target environment variables for target environment
@@ -102,7 +102,7 @@ These scripts must be run in order to complete a download.
    *Sandbox (working example):*
 
    ```ShellSession
-   $AUTH_FILE=auth-credentials.base64
+   $AUTH_FILE='auth-credentials.base64'
    $AUTHENTICATION_URL='https://test.idp.idm.cms.gov/oauth2/aus2r7y3gdaFMKBol297/v1/token'
    $AB2D_API_URL='https://sandbox.ab2d.cms.gov/api'
    ```
