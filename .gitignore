@@ -1,0 +1,6 @@
+
+# Ignore IDE metadata
+.idea/**
+
+# Ignore credentials used for testing
+*.base64
