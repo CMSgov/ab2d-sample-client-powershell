@@ -8,7 +8,7 @@ if (-NOT (TEST-PATH -PATH $AUTH_FILE))
   exit
 }
 
-$JOB_RESULTS = Get-Content -Path 'complete_job_response.json' | select -Last 1
+$JOB_RESULTS = Get-Content -Path 'complete_job_response.json'
 
 $AUTH = Get-Content $AUTH_FILE
 $AUTH = $AUTH.Trim()

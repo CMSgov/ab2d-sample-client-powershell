@@ -73,7 +73,8 @@ while ($response.StatusCode -ne "200") {
     Write-Host ''
 
     $JOB_COMPLETE = 1
-    Set-Content -Path 'complete_job_response.json' $response
+    $LIST_TO_DOWNLOAD = $response | select -Last 1
+    Set-Content -Path 'complete_job_response.json' $LIST_TO_DOWNLOAD
   }
 
   if ($JOB_COMPLETE -eq 0) {
