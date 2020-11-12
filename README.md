@@ -87,22 +87,30 @@ These scripts must be run in order to complete a download.
     
    ```ShellSession
    $BASE64_ENCODED_ID_PASSWORD='MG9hMnQwbHNyZFp3NXVXUngyOTc6SEhkdVdHNkxvZ0l2RElRdVdncDNabG85T1lNVmFsVHRINU9CY3VIdw=='
-   Set-Content -Path auth-crendentials.base64 $BASE64_ENCODED_ID_PASSWORD
+   Set-Content -Path "{credentials-file}" $BASE64_ENCODED_ID_PASSWORD
    ```
     
    *Production (replace {variable} with your settings):*
     
    ```ShellSession
    $BASE64_ENCODED_ID_PASSWORD='{Base64-encoded id:password}'
-   Set-Content -Path auth-credentials.base64 $BASE64_ENCODED_ID_PASSWORD
+   Set-Content -Path "{credentials-file}" $BASE64_ENCODED_ID_PASSWORD
    ```
+1. Check the base 64 credentials for correctness
+
+   ```ShellSession
+   $BASE64_ENCODED_ID_PASSWORD = Get-Content "{credentials-file}"
+   [System.Text.Encoding]::UTF8.GetString([System.Convert]::FromBase64String($BASE64_ENCODED_ID_PASSWORD))
+   ```
+
+    You should see your id:password just as in the previous step. If you do not then the encoding was not successful.
 
 1. Set target environment variables for target environment
 
    *Sandbox (working example):*
 
    ```ShellSession
-   $AUTH_FILE='auth-credentials.base64'
+   $AUTH_FILE="{credentials-file}"
    $AUTHENTICATION_URL='https://test.idp.idm.cms.gov/oauth2/aus2r7y3gdaFMKBol297/v1/token'
    $AB2D_API_URL='https://sandbox.ab2d.cms.gov/api'
    ```
@@ -110,7 +118,7 @@ These scripts must be run in order to complete a download.
    *Production (replace {variable} with your settings):*
 
    ```ShellSession
-   $AUTH_FILE={your-credentials-file}
+   $AUTH_FILE="{your-credentials-file}"
    $AUTHENTICATION_URL='https://idm.cms.gov/oauth2/aus2ytanytjdaF9cr297/v1/token'
    $AB2D_API_URL='https://api.ab2d.cms.gov/api'
    ```
