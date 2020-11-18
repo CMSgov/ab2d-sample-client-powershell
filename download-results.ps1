@@ -50,7 +50,7 @@ while ($FILE_INDEX -ne ($LAST_FILE_INDEX + 1)) {
 
   if (TEST-PATH -PATH $FILE)
   {
-    Write-Host "$FILE already exists will not override"
+    Write-Host "WARNING: $FILE already exists will not download. Run script again once file is moved to download."
   } else
   {
     Write-Host '---------------------------------------------------------------------------------------------------------------------'

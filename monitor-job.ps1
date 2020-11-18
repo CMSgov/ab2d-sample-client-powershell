@@ -2,6 +2,8 @@
 # monitor-job.ps1
 ###################################
 
+$ErrorActionPreference = 'Stop'
+
 if (-NOT (TEST-PATH -PATH $AUTH_FILE))
 {
   Write-Host 'Auth credentials file does not exist or this program does not have permission to access it'
@@ -48,14 +50,21 @@ $SLEEP_TIME_IN_SECONDS = 60
 $TOTAL_PROCESSING_TIME = 0
 $REFRESH_TOKEN_FACTOR_IN_SECONDS = 1800
 
-while ($response.StatusCode -ne "200") {
+while ($JOB_COMPLETE -eq 0) {
   $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
   $headers.Add("Accept", "application/json")
   $headers.Add("Authorization", "Bearer $BEARER_TOKEN")
   $response = Invoke-WebRequest "$STATUS_URL" -Method 'GET' -Headers $headers -Body $body
 
-  if ($response.StatusCode -ne "200") {
-    Write-Host '---------------------------------------------------------------------------------------------------------------------'
+  Write-Host '---------------------------------------------------------------------------------------------------------------------'
+
+  if ($response.StatusCode -eq "202" -or $response.StatusCode -eq "200" ) {
+    Write-Host "Completion percentage: $( $response.Headers['X-Progress'] )"
+    Write-Host "Retry-After: $( $response.Headers['Retry-After'] )"
+    Write-Host "Content-Type: $( $response.Headers['Content-Type'] )"
+  }
+
+  if ($response.StatusCode -eq "202") {
     Write-Host "Current status code: $($response.StatusCode)"
 
     if ($TOTAL_PROCESSING_TIME -ne 0) {
@@ -66,8 +75,7 @@ while ($response.StatusCode -ne "200") {
     Write-Host '---------------------------------------------------------------------------------------------------------------------'
     Write-Host ''
 
-  } else {
-    Write-Host '---------------------------------------------------------------------------------------------------------------------'
+  } elseif ($response.StatusCode -eq "200") {
     Write-Host 'Export job complete'
     Write-Host '---------------------------------------------------------------------------------------------------------------------'
     Write-Host ''
@@ -75,6 +83,12 @@ while ($response.StatusCode -ne "200") {
     $JOB_COMPLETE = 1
     $LIST_TO_DOWNLOAD = $response | select -Last 1
     Set-Content -Path 'complete_job_response.json' $LIST_TO_DOWNLOAD
+  } else {
+    $JOB_COMPLETE = -1
+    Write-Host "Export job failed with status code: $($response.StatusCode)"
+    Write-Host "And message $($response.Body)"
+    Write-Host '---------------------------------------------------------------------------------------------------------------------'
+    Write-Host ''
   }
 
   if ($JOB_COMPLETE -eq 0) {

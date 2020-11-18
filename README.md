@@ -82,7 +82,11 @@ These scripts must be run in order to complete a download.
    - paste all lines into PowerShell
 
    - press Enter on the keyboard
-1. Create the base 64 credentials and save them to the AUTH_FILE
+   
+1. Create the Base64 credentials and save them to the AUTH_FILE
+
+   **Skip if you have already created a Base64 credentials file**
+
    *Sandbox (working example):*
     
    ```ShellSession
@@ -96,7 +100,10 @@ These scripts must be run in order to complete a download.
    $BASE64_ENCODED_ID_PASSWORD='{Base64-encoded id:password}'
    Set-Content -Path "{credentials-file}" $BASE64_ENCODED_ID_PASSWORD
    ```
+   
 1. Check the base 64 credentials for correctness
+
+   **Skip if you know the Base64 credentials file is accurate**
 
    ```ShellSession
    $BASE64_ENCODED_ID_PASSWORD = Get-Content "{credentials-file}"
@@ -136,6 +143,8 @@ These scripts must be run in order to complete a download.
    ```
 
 1. Download file(s)
+
+    **This script will not overwrite existing files so please move previous downloads before running this script**
 
    ```ShellSession
    .\download-results.ps1
