@@ -61,6 +61,8 @@ $STATUS_URL = $response.Headers['Content-Location']
 
 if ($STATUS_URL)
 {
+    Write-Host "Starting a job succeeded"
+    Write-Host "Saving the status url to use for monitoring $STATUS_URL"
     Set-Content -Path 'status_url.txt' $STATUS_URL
 } else {
     Write-Host 'Starting a job failed'
