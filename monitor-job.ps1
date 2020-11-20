@@ -50,6 +50,8 @@ $SLEEP_TIME_IN_SECONDS = 60
 $TOTAL_PROCESSING_TIME = 0
 $REFRESH_TOKEN_FACTOR_IN_SECONDS = 1800
 
+[System.GC]::Collect()
+
 while ($JOB_COMPLETE -eq 0) {
   $headers = New-Object "System.Collections.Generic.Dictionary[[String],[String]]"
   $headers.Add("Accept", "application/json")
@@ -101,4 +103,6 @@ while ($JOB_COMPLETE -eq 0) {
       $BEARER_TOKEN = Get-Bearer-Token
     }
   }
+
+  [System.GC]::Collect()
 }

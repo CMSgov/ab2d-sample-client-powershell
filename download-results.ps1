@@ -40,6 +40,7 @@ Write-Host "There are $NUMBER_OF_FILES file(s) with index(es) ranging from $FIRS
 Write-Host ''
 
 # Download file(s) incrementing the file index after each file is downloaded until the last file index is reached
+[System.GC]::Collect()
 
 $FILE_INDEX = 0
 while ($FILE_INDEX -ne ($LAST_FILE_INDEX + 1)) {
@@ -71,5 +72,7 @@ while ($FILE_INDEX -ne ($LAST_FILE_INDEX + 1)) {
       Write-Host ''
     }
   }
+
+  [System.GC]::Collect()
   $FILE_INDEX++
 }
