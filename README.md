@@ -1,4 +1,4 @@
-# Welcome to the AB2D Sample Repo 
+# Welcome to the AB2D PowerShell Sample Repo 
 
 Our API Clients are open source. This repo contains *sample* PowerShell script which demonstrate how to pull data from the AB2D API Production environment.
 
