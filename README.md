@@ -1,4 +1,17 @@
-# AB2D PowerShell
+# Welcome to the AB2D Sample Repo 
+
+Our API Clients are open source. This repo contains *sample* PowerShell script which demonstrate how to pull data from the AB2D API Production environment.
+
+This may be a great starting point for your engineering or development teams however it is important to note that the AB2D team does **not** regularly maintain the sample clients. Additionally, a best-effort was made to ensure the clients are secure but they have not undergone comprehensive formal security testing. Each user/organization is responsible for conducting their own review and testing prior to implementation
+
+Use of these clients in the sandbox environment, can allow for testing, and if a mistake is made no PII/PHI is compromised. The sandbox environment is publicly available and all of the data in it is synthetic (**not** real)
+
+## Production Use Disclaimer:
+
+These clients are provided as examples, but they are fully functioning (with some modifications) in the production environment. Feel free to use them as a reference. When used in production (even for testing purposes), these clients have the ability to download PII/PHI information. You should therefore ensure the environment in which these scripts are run is secured in a way to allow for storage of PII/PHI. Additionally, when used in the production environment the scripts will require use of your production credentials, as such please ensure that your credentials are handled in a secure manner and not printed to logs or the terminal. Ensuring the privacy of data is the responsibility of each user and/or organization.
+
+
+# AB2D PowerShell Instructions
 
 Sample scripts running a full export from starting a job to downloading results
 
