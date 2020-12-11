@@ -36,6 +36,23 @@ Scripts:
 
 These scripts must be run in order to complete a download.
 
+## Since
+
+If you only want data after a certain date specify the `$SINCE` parameter. 
+The expected format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX+/-ZZ:ZZ which follows ISO datetime standards.
+
+The earliest date that since works for is February 13th, 2020. Specifically: `2020-02-13T00:00:00.000-05:00`
+
+Examples:
+1. March 1, 2020 at 3 PM EST -> `2020-03-01T15:00:00.000-05:00`
+2. May 31, 2020 at 4 AM PST `2020-05-31T04:00:00-08:00`
+
+Example in powershell:
+
+   ```ShellSession
+   $SINCE=2020-03-01T15:00:00.000-05:00
+   ```
+
 ## Step by Step Guide
 
 1. Note the following
@@ -133,6 +150,9 @@ These scripts must be run in order to complete a download.
    $AUTH_FILE="{credentials-file}"
    $AUTHENTICATION_URL='https://test.idp.idm.cms.gov/oauth2/aus2r7y3gdaFMKBol297/v1/token'
    $AB2D_API_URL='https://sandbox.ab2d.cms.gov/api'
+   
+   # If you only want data after a specific date use the $SINCE parameter
+   $SINCE=2020-02-13T00:00:00.000-05:00
    ```
 
    *Production (replace {variable} with your settings):*
@@ -141,6 +161,9 @@ These scripts must be run in order to complete a download.
    $AUTH_FILE="{your-credentials-file}"
    $AUTHENTICATION_URL='https://idm.cms.gov/oauth2/aus2ytanytjdaF9cr297/v1/token'
    $AB2D_API_URL='https://api.ab2d.cms.gov/api'
+   
+   # If you only want data after a specific date use the $SINCE parameter
+   $SINCE=2020-02-13T00:00:00.000-05:00
    ```
    
 1. Create an export job
