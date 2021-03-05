@@ -27,7 +27,7 @@ function Get-Bearer-Token {
 
 # Set API variables
 $OKTA_URI_WITH_PARAMS = "$AUTHENTICATION_URL`?grant_type=client_credentials&scope=clientCreds"
-$EXPORT_URL = "$AB2D_API_URL/v1/fhir/Patient/`$export`?_outputFormat=application%2Ffhir%2Bndjson&_type=ExplanationOfBenefit"
+$EXPORT_URL = "$AB2D_API_URL/fhir/Patient/`$export`?_outputFormat=application%2Ffhir%2Bndjson&_type=ExplanationOfBenefit"
 
 if ($SINCE)
 {

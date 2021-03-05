@@ -142,25 +142,26 @@ Example in powershell:
 
     You should see your id:password just as in the previous step. If you do not then the encoding was not successful.
 
-1. Set target environment variables for target environment
+1. Set target environment variables for target environment and FHIR version. FHIR STU3 (the default) is `v1`. 
+   FHIR R4 (coming soon), will be `v2`.
 
-   *Sandbox (working example):*
+   *Sandbox FHIR STU3 (working example):*
 
    ```ShellSession
    $AUTH_FILE="{credentials-file}"
    $AUTHENTICATION_URL='https://test.idp.idm.cms.gov/oauth2/aus2r7y3gdaFMKBol297/v1/token'
-   $AB2D_API_URL='https://sandbox.ab2d.cms.gov/api'
+   $AB2D_API_URL='https://sandbox.ab2d.cms.gov/api/v1'
    
    # If you only want claims data updated or filed after a specific date use the $SINCE parameter
    $SINCE=2020-02-13T00:00:00.000-05:00
    ```
 
-   *Production (replace {variable} with your settings):*
+   *Production FHIR STU3 (replace {variable} with your settings):*
 
    ```ShellSession
    $AUTH_FILE="{your-credentials-file}"
    $AUTHENTICATION_URL='https://idm.cms.gov/oauth2/aus2ytanytjdaF9cr297/v1/token'
-   $AB2D_API_URL='https://api.ab2d.cms.gov/api'
+   $AB2D_API_URL='https://api.ab2d.cms.gov/api/v1'
    
    # If you only want claims data updated or filed after a specific date use the $SINCE parameter
    $SINCE=2020-02-13T00:00:00.000-05:00
