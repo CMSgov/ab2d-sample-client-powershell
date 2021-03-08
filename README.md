@@ -145,7 +145,7 @@ Example in powershell:
 1. Set target environment variables for target environment and FHIR version. FHIR STU3 (the default) is `v1`. 
    FHIR R4 (coming soon), will be `v2`.
 
-   *Sandbox FHIR STU3 (working example):*
+   *Sandbox FHIR STU3 (working example, for FHIR R4, replace v1 with v2 in `AB2D_API_URL`):*
 
    ```ShellSession
    $AUTH_FILE="{credentials-file}"
@@ -156,7 +156,7 @@ Example in powershell:
    $SINCE=2020-02-13T00:00:00.000-05:00
    ```
 
-   *Production FHIR STU3 (replace {variable} with your settings):*
+   *Production FHIR STU3 (replace {variable} with your settings, for FHIR R4, replace v1 with v2 in `AB2D_API_URL`):*
 
    ```ShellSession
    $AUTH_FILE="{your-credentials-file}"
