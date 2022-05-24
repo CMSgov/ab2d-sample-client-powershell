@@ -2,18 +2,19 @@
 
 Our API Clients are open source. This repo contains *sample* PowerShell script which demonstrate how to pull data from the AB2D API Production environment.
 
-This may be a great starting point for your engineering or development teams however it is important to note that the AB2D team does **not** regularly maintain the sample clients. Additionally, a best-effort was made to ensure the clients are secure but they have **not** undergone comprehensive formal security testing. Each user/organization is responsible for conducting their own review and testing prior to implementation
+This may be a great starting point for your engineering or development teams however it is important to note that the AB2D team does **not** regularly maintain the sample clients. Additionally, a best-effort was made to ensure the clients are secure, but they have **not** undergone comprehensive formal security testing. Each user/organization is responsible for conducting their own review and testing prior to implementation
 
-Use of these clients in the sandbox environment, can allow for testing, and if a mistake is made no PII/PHI is compromised. The sandbox environment is publicly available and all of the data in it is synthetic (**not** real)
+Use of these clients in the sandbox environment allows for safe testing and ensures no PII/PHI will not be compromised if a mistake is made. The sandbox environment is publicly available and all the data in it is synthetic (**not** real)
+
+AB2D supports both R4 and STU3 versions of the FHIR standard. FHIR R4 is available using v2 of AB2D while FHIR STU3 can be accessed via AB2D v1. Accordingly, this client supports both R4/v2 and STU3/v1.
 
 ## Production Use Disclaimer:
 
 These clients are provided as examples, but they are fully functioning (with some modifications) in the production environment. Feel free to use them as a reference. When used in production (even for testing purposes), these clients have the ability to download PII/PHI information. You should therefore ensure the environment in which these scripts are run is secured in a way to allow for storage of PII/PHI. Additionally, when used in the production environment the scripts will require use of your production credentials. As such, please ensure that your credentials are handled in a secure manner and not printed to logs or the terminal. Ensuring the privacy of data is the responsibility of each user and/or organization.
 
-
 ## AB2D PowerShell Instructions
 
-Sample scripts running a full export from starting a job to downloading results
+Sample scripts running a full export from starting a job to downloading results. This client support both FHIR version R4 (v2) and STU3 (v1).
 
 Files Created by Scripts:
 
@@ -41,7 +42,10 @@ These scripts must be run in order to complete a download.
 If you only want claims data updated or filed after a certain date specify the `$SINCE` parameter. 
 The expected format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX+/-ZZ:ZZ which follows ISO datetime standards.
 
-The earliest date that since works for is February 13th, 2020. Specifically: `2020-02-13T00:00:00.000-05:00`
+The earliest date that `_since` works for is February 13th, 2020. Specifically: `2020-02-13T00:00:00.000-05:00`
+
+For requests using FHIR R4, a default `_since` value is supplied if one is not provided. The value of the default `_since`
+parameter is set to the creation date and time of a contract's last successfully searched and downloaded job.
 
 Examples:
 1. March 1, 2020 at 3 PM EST -> `2020-03-01T15:00:00.000-05:00`
@@ -53,7 +57,7 @@ Example in powershell:
    $SINCE=2020-03-01T15:00:00.000-05:00
    ```
 
-## Step by Step Guide
+## Step-by-Step Guide
 
 1. Note the following
 
@@ -61,7 +65,7 @@ Example in powershell:
 
    - sandbox is publicly available
 
-   - production is only accessible if you machine has been whitelisted to use it
+   - production is only accessible if your machine has been whitelisted to use it
 
 1. Open PowerShell as an administrator
 
@@ -77,7 +81,7 @@ Example in powershell:
 
    1. Select **Run as administrator**
 
-   1. If the "User Account Conntrol" window appears, select **Yes**
+   1. If the "User Account Control" window appears, select **Yes**
 
 1. Allow PowerShell to run scripts that are not digitally signed
 
@@ -142,26 +146,26 @@ Example in powershell:
 
     You should see your id:password just as in the previous step. If you do not then the encoding was not successful.
 
-1. Set target environment variables for target environment and FHIR version. FHIR STU3 (the default) is `v1`. 
-   FHIR R4 (coming soon), will be `v2`.
+1. Set variables for target environment and FHIR version. FHIR R4 is `v2`.  Deprecated FHIR STU3 is v1.
+   FHIR STU3 is `v1`. (Note, the AUTHENTICATION_URL is still v1 for both FHIR versions)
 
-   *Sandbox FHIR STU3 (working example, for FHIR R4, replace v1 with v2 in `AB2D_API_URL`):*
+   *Sandbox FHIR R4 (working example, for FHIR STU3, replace v2 with v1 in `AB2D_API_URL`):*
 
    ```ShellSession
    $AUTH_FILE="{credentials-file}"
    $AUTHENTICATION_URL='https://test.idp.idm.cms.gov/oauth2/aus2r7y3gdaFMKBol297/v1/token'
-   $AB2D_API_URL='https://sandbox.ab2d.cms.gov/api/v1'
+   $AB2D_API_URL='https://sandbox.ab2d.cms.gov/api/v2'
    
    # If you only want claims data updated or filed after a specific date use the $SINCE parameter
    $SINCE=2020-02-13T00:00:00.000-05:00
    ```
 
-   *Production FHIR STU3 (replace {variable} with your settings, for FHIR R4, replace v1 with v2 in `AB2D_API_URL`):*
+   *Production FHIR R4 (replace {variable} with your settings, for FHIR STU3, replace v2 with v1 in `AB2D_API_URL`):*
 
    ```ShellSession
    $AUTH_FILE="{your-credentials-file}"
    $AUTHENTICATION_URL='https://idm.cms.gov/oauth2/aus2ytanytjdaF9cr297/v1/token'
-   $AB2D_API_URL='https://api.ab2d.cms.gov/api/v1'
+   $AB2D_API_URL='https://api.ab2d.cms.gov/api/v2'
    
    # If you only want claims data updated or filed after a specific date use the $SINCE parameter
    $SINCE=2020-02-13T00:00:00.000-05:00
