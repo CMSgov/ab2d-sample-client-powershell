@@ -57,6 +57,24 @@ Example in powershell:
    $SINCE=2020-03-01T15:00:00.000-05:00
    ```
 
+## UNTIL
+
+If you only want claims data updated or filed before a certain date specify the `$UNTIL` parameter.
+The expected format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX+/-ZZ:ZZ which follows ISO datetime standards.
+
+For requests using FHIR R4, a default `_until` value is supplied if one is not provided. The value of the default `_until`
+parameter is set to the current date and time.
+
+Examples:
+1. March 1, 2024 at 3 PM EST -> `2024-03-01T15:00:00.000-05:00`
+2. May 31, 2024 at 4 AM PST `2024-05-31T04:00:00-08:00`
+
+Example in powershell:
+
+   ```ShellSession
+   $UNTIL=2024-03-01T15:00:00.000-05:00
+   ```
+
 ## Step-by-Step Guide
 
 1. Note the following
@@ -158,6 +176,9 @@ Example in powershell:
    
    # If you only want claims data updated or filed after a specific date use the $SINCE parameter
    $SINCE=2020-02-13T00:00:00.000-05:00
+   
+   # If you only want claims data updated or filed before a specific date use the $UNTIL parameter
+   $UNTIL=2024-02-13T00:00:00.000-05:00
    ```
 
    *Production FHIR R4 (replace {variable} with your settings, for FHIR STU3, replace v2 with v1 in `AB2D_API_URL`):*
@@ -169,6 +190,9 @@ Example in powershell:
    
    # If you only want claims data updated or filed after a specific date use the $SINCE parameter
    $SINCE=2020-02-13T00:00:00.000-05:00
+      
+   # If you only want claims data updated or filed before a specific date use the $UNTIL parameter
+   $UNTIL=2024-02-13T00:00:00.000-05:00
    ```
    
 1. Create an export job
