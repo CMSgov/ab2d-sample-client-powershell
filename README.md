@@ -62,8 +62,8 @@ Example in powershell:
 If you only want claims data updated or filed before a certain date specify the `$UNTIL` parameter.
 The expected format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX+/-ZZ:ZZ which follows ISO datetime standards.
 
-For requests using FHIR R4, a default `_until` value is supplied if one is not provided. The value of the default `_until`
-parameter is set to the current date and time.
+This parameter is only available with V2 (FHIR R4). 
+If no `_until` date is specified or you use a date from the future, it will default to the current date and time.
 
 Examples:
 1. March 1, 2024 at 3 PM EST -> `2024-03-01T15:00:00.000-05:00`
