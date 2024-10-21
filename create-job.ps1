@@ -8,6 +8,12 @@ if (-NOT (TEST-PATH -PATH $AUTH_FILE))
     exit
 }
 
+if ($AB2D_API_URL -like "*/v1" -And $UNTIL)
+{
+    Write-Host 'The _until parameter is only available with version 2 (FHIR R4) of the API'
+    exit
+}
+
 $AUTH = Get-Content $AUTH_FILE
 $AUTH = $AUTH.Trim()
 
@@ -33,6 +39,11 @@ if ($SINCE)
 {
     $SINCE = $SINCE -replace ":", "%3A"
     $EXPORT_URL = $EXPORT_URL + "&_since=" + $SINCE
+}
+if ($UNTIL)
+{
+    $UNTIL = $UNTIL -replace ":", "%3A"
+    $EXPORT_URL = $EXPORT_URL + "&_until=" + $UNTIL
 }
 
 Write-Host '---------------------------------------------------------------------------------------------------------------------'
