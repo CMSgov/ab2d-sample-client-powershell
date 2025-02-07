@@ -48,6 +48,13 @@ while ($FILE_INDEX -ne ($LAST_FILE_INDEX + 1)) {
   $BEARER_TOKEN = Get-Bearer-Token
   $FILE_URL = ($JOB_RESULTS | ConvertFrom-Json).output[$FILE_INDEX].url
   $FILE = $FILE_URL.split("/")[9]
+  $ACCEPT_ENCODING = 'identity'
+
+  if($GZIP -eq 'true')
+  {
+    $ACCEPT_ENCODING = 'gzip'
+    $FILE = $FILE + ".gz"
+  }
 
   if (TEST-PATH -PATH $FILE)
   {
@@ -63,6 +70,7 @@ while ($FILE_INDEX -ne ($LAST_FILE_INDEX + 1)) {
     $client = New-Object System.Net.WebClient
     $client.headers["Authorization"] = "Bearer $BEARER_TOKEN"
     $client.headers["Accept"] = "application/fhir+ndjson"
+    $client.headers["Accept-Encoding"] = "$ACCEPT_ENCODING"
 
     try {
       Add-Content -Path $FILE -Value $client.DownloadString("$FILE_URL")
