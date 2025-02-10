@@ -207,7 +207,7 @@ Example in powershell:
    .\monitor-job.ps1
    ```
 
-1. Download file(s)
+1. Download file(s). You can speed up download times by requesting compressed files in gzip format with the optional `Accept-Encoding: gzip` header in your command. Afterward, decompress (unzip) the gzip files into NDJSON format.
 
     **This script will not overwrite existing files so please move previous downloads before running this script**
 
