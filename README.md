@@ -194,8 +194,7 @@ Example in powershell:
    # If you only want claims data updated or filed before a specific date use the $UNTIL parameter
    $UNTIL='2024-02-13T00:00:00.000-05:00'
    ```
-   
- 
+
 1. Create an export job
 
    ```ShellSession
