@@ -20,7 +20,7 @@ Files Created by Scripts:
 
 1. status_url.txt -- url to check the status of a newly created job
 1. completed_job_response.json -- response from status_url when a job has completed successfully.
-1. *.ndjson or *.ndjson.gz -- eob claims data downloaded after an export completes
+1. *.ndjson -- eob claims data downloaded after an export completes
 
 Assumptions:
 
