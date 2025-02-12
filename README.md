@@ -195,10 +195,6 @@ Example in powershell:
    $UNTIL='2024-02-13T00:00:00.000-05:00'
    ```
    
-   *NOTE: To improve file transfer times, you can download files in a compressed gzip format by adding this:*
-   ```ShellSession
-   $GZIP='true'
-   ```
  
 1. Create an export job
 
@@ -212,7 +208,7 @@ Example in powershell:
    .\monitor-job.ps1
    ```
 
-1. Download file(s). You can speed up download times by requesting compressed files in gzip format with the optional `Accept-Encoding: gzip` header in your command. Afterward, decompress (unzip) the gzip files into NDJSON format.
+1. Download file(s)
 
     **This script will not overwrite existing files so please move previous downloads before running this script**
 
