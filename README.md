@@ -42,7 +42,7 @@ These scripts must be run in order to complete a download.
 If you only want claims data updated or filed after a certain date specify the `$SINCE` parameter. 
 The expected format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX+/-ZZ:ZZ which follows ISO datetime standards.
 
-The earliest date that `_since` works for is February 13th, 2020. Specifically: `2020-02-13T00:00:00.000-05:00`
+The earliest date that `_since` works for is January 1, 2020. Specifically: `2020-01-01T00:00:00.000-05:00`
 
 For requests using FHIR R4, a default `_since` value is supplied if one is not provided. The value of the default `_since`
 parameter is set to the creation date and time of a contract's last successfully searched and downloaded job.
