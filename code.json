@@ -13,7 +13,7 @@
     "usageType": "openSource"
   },
   "organization": "Centers for Medicare & Medicaid Services",
-  "repositoryURL": "https://github.com/CMSGov/ab2d-sample-client-powershell",
+  "repositoryURL": "https://github.com/CMSgov/ab2d-sample-client-powershell",
   "repositoryHost": "github.com/CMSgov",
   "repositoryVisibility": "public",
   "vcs": "git",
@@ -48,7 +48,7 @@
     "name": "CMS Open Source Program Office"
   },
   "feedbackMechanisms": [
-    "https://github.com/CMSGov/ab2d-sample-client-powershell/issues"
+    "https://github.com/CMSgov/ab2d-sample-client-powershell/issues"
   ],
   "localisation": "false",
   "repositoryType": "Apps",
