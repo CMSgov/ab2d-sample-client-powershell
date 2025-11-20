@@ -2,6 +2,36 @@
 # create-job.ps1
 ###################################
 
+# Validate FHIR version and AB2D endpoint version
+if (-not $env:FHIR_VERSION) {
+    Write-Host "The FHIR version must be specified in FHIR_VERSION environment variable [R4 | STU3]"
+    exit
+}
+
+$FHIR_VERSION = $env:FHIR_VERSION
+$AB2D_ENDPOINT = $env:AB2D_ENDPOINT  # optional
+
+if ($FHIR_VERSION -ne "R4" -and $FHIR_VERSION -ne "STU3") {
+    Write-Host "The FHIR version must be either R4 or STU3 (current: $FHIR_VERSION)"
+    exit
+}
+
+if ($FHIR_VERSION -eq "STU3" -and $AB2D_ENDPOINT) {
+    Write-Host "The --ab2d-endpoint parameter (AB2D_ENDPOINT) is only available with FHIR R4"
+    exit
+}
+
+if ($FHIR_VERSION -eq "R4") {
+    if (-not $AB2D_ENDPOINT) {
+        $AB2D_ENDPOINT = "v2"
+        Write-Host "AB2D_ENDPOINT was not set; defaulting to v2 for FHIR R4"
+    }
+    elseif ($AB2D_ENDPOINT -ne "v2" -and $AB2D_ENDPOINT -ne "v3") {
+        Write-Host "When using FHIR R4, AB2D_ENDPOINT must be one of: v2 or v3 (current: $AB2D_ENDPOINT)"
+        exit
+    }
+}
+
 if (-NOT (TEST-PATH -PATH $AUTH_FILE))
 {
     Write-Host 'Auth credentials file does not exist or this program does not have permission to access it'

@@ -6,7 +6,7 @@ This may be a great starting point for your engineering or development teams how
 
 Use of these clients in the sandbox environment allows for safe testing and ensures no PII/PHI will not be compromised if a mistake is made. The sandbox environment is publicly available and all the data in it is synthetic (**not** real)
 
-AB2D supports both R4 and STU3 versions of the FHIR standard. FHIR R4 is available using v2 of AB2D while FHIR STU3 can be accessed via AB2D v1. Accordingly, this client supports both R4/v2 and STU3/v1.
+AB2D supports both R4 and STU3 versions of the FHIR standard. FHIR R4 is available using v2 and v3 of AB2D while FHIR STU3 can be accessed via AB2D v1. Accordingly, this client supports both R4/v2 and STU3/v1.
 
 ## Production Use Disclaimer:
 
