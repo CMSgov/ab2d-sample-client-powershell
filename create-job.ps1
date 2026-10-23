@@ -2,34 +2,11 @@
 # create-job.ps1
 ###################################
 
-# Validate FHIR version and AB2D endpoint version
-if (-not $env:FHIR_VERSION) {
-    Write-Host "The FHIR version must be specified in FHIR_VERSION environment variable [R4 | STU3]"
+# Validate AB2D API version: v1 (FHIR STU3), v2 (FHIR R4) or v3 (FHIR R4)
+if ($AB2D_API_URL -notmatch '/v[123]$')
+{
+    Write-Host "AB2D_API_URL must end with /v1, /v2 or /v3 (current: $AB2D_API_URL)"
     exit
-}
-
-$FHIR_VERSION = $env:FHIR_VERSION
-$AB2D_ENDPOINT = $env:AB2D_ENDPOINT  # optional
-
-if ($FHIR_VERSION -ne "R4" -and $FHIR_VERSION -ne "STU3") {
-    Write-Host "The FHIR version must be either R4 or STU3 (current: $FHIR_VERSION)"
-    exit
-}
-
-if ($FHIR_VERSION -eq "STU3" -and $AB2D_ENDPOINT) {
-    Write-Host "The --ab2d-endpoint parameter (AB2D_ENDPOINT) is only available with FHIR R4"
-    exit
-}
-
-if ($FHIR_VERSION -eq "R4") {
-    if (-not $AB2D_ENDPOINT) {
-        $AB2D_ENDPOINT = "v2"
-        Write-Host "AB2D_ENDPOINT was not set; defaulting to v2 for FHIR R4"
-    }
-    elseif ($AB2D_ENDPOINT -ne "v2" -and $AB2D_ENDPOINT -ne "v3") {
-        Write-Host "When using FHIR R4, AB2D_ENDPOINT must be one of: v2 or v3 (current: $AB2D_ENDPOINT)"
-        exit
-    }
 }
 
 if (-NOT (TEST-PATH -PATH $AUTH_FILE))
@@ -40,7 +17,13 @@ if (-NOT (TEST-PATH -PATH $AUTH_FILE))
 
 if ($AB2D_API_URL -like "*/v1" -And $UNTIL)
 {
-    Write-Host 'The _until parameter is only available with version 2 (FHIR R4) of the API'
+    Write-Host 'The _until parameter is only available with version 2 and version 3 (FHIR R4) of the API'
+    exit
+}
+
+if ($SERVICE_DATE -And $AB2D_API_URL -notlike "*/v3")
+{
+    Write-Host 'The $SERVICE_DATE parameter is only available with version 3 of the API'
     exit
 }
 
@@ -74,6 +57,13 @@ if ($UNTIL)
 {
     $UNTIL = $UNTIL -replace ":", "%3A"
     $EXPORT_URL = $EXPORT_URL + "&_until=" + $UNTIL
+}
+if ($SERVICE_DATE)
+{
+    # service-date is passed to the API as a URL encoded _typeFilter subquery on ExplanationOfBenefit
+    # gt2026-01-01,lt2026-02-01 -> ExplanationOfBenefit?service-date=gt2026-01-01&service-date=lt2026-02-01
+    $SERVICE_DATE_PARAMS = ($SERVICE_DATE -split "," | ForEach-Object { "service-date%3D" + $_.Trim() }) -join "%26"
+    $EXPORT_URL = $EXPORT_URL + "&_typeFilter=ExplanationOfBenefit%3F" + $SERVICE_DATE_PARAMS
 }
 
 Write-Host '---------------------------------------------------------------------------------------------------------------------'
