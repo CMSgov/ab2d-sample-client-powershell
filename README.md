@@ -6,7 +6,7 @@ This may be a great starting point for your engineering or development teams how
 
 Use of these clients in the sandbox environment allows for safe testing and ensures no PII/PHI will not be compromised if a mistake is made. The sandbox environment is publicly available and all the data in it is synthetic (**not** real)
 
-AB2D supports both R4 and STU3 versions of the FHIR standard. FHIR R4 is available using v2 of AB2D while FHIR STU3 can be accessed via AB2D v1. Accordingly, this client supports both R4/v2 and STU3/v1.
+AB2D supports both R4 and STU3 versions of the FHIR standard. FHIR R4 is available using v2 and v3 of AB2D while FHIR STU3 can be accessed via AB2D v1. Accordingly, this client supports R4/v3, R4/v2 and STU3/v1.
 
 ## Production Use Disclaimer:
 
@@ -14,7 +14,7 @@ These clients are provided as examples, but they are fully functioning (with som
 
 ## AB2D PowerShell Instructions
 
-Sample scripts running a full export from starting a job to downloading results. This client support both FHIR version R4 (v2) and STU3 (v1).
+Sample scripts running a full export from starting a job to downloading results. This client supports FHIR version R4 (v2, v3) and STU3 (v1).
 
 Files Created by Scripts:
 
@@ -44,6 +44,8 @@ The expected format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX+/-ZZ:ZZ which follows ISO da
 
 The earliest date that `_since` works for is February 13th, 2020. Specifically: `2020-02-13T00:00:00.000-05:00`
 
+For V3 (R4V3), the earliest recommended date is March 26th, 2026. Specifically: `2026-03-26T00:00:00.000-05:00`
+
 For requests using FHIR R4, a default `_since` value is supplied if one is not provided. The value of the default `_since`
 parameter is set to the creation date and time of a contract's last successfully searched and downloaded job.
 
@@ -62,7 +64,7 @@ Example in powershell:
 If you only want claims data updated or filed before a certain date specify the `$UNTIL` parameter.
 The expected format is yyyy-MM-dd'T'HH:mm:ss.SSSXXX+/-ZZ:ZZ which follows ISO datetime standards.
 
-This parameter is only available with V2 (FHIR R4). 
+This parameter is only available with V2 and V3 (FHIR R4). 
 If no `_until` date is specified or you use a date from the future, it will default to the current date and time.
 
 Examples:
@@ -73,6 +75,21 @@ Example in powershell:
 
    ```ShellSession
    $UNTIL='2024-03-01T15:00:00.000-05:00'
+   ```
+
+## SERVICE_DATE
+
+If you only want claims data with a service date in a certain range specify the `$SERVICE_DATE` parameter.
+The script sends it to the API as `_typeFilter=ExplanationOfBenefit?service-date=...`.
+
+This parameter is only available with V3 (`$AB2D_API_URL` ending in `/v3`).
+
+Example FHIR date param format is gt2026-01-01 or gt2026-01-01,lt2026-02-01
+
+Example in powershell:
+
+   ```ShellSession
+   $SERVICE_DATE='gt2026-01-01,lt2026-02-01'
    ```
 
 ## Step-by-Step Guide
@@ -164,8 +181,8 @@ Example in powershell:
 
     You should see your id:password just as in the previous step. If you do not then the encoding was not successful.
 
-1. Set variables for target environment and FHIR version. FHIR R4 is `v2`.  Deprecated FHIR STU3 is v1.
-   FHIR STU3 is `v1`. (Note, the AUTHENTICATION_URL is still v1 for both FHIR versions)
+1. Set variables for target environment and FHIR version. FHIR R4 is `v2` or `v3`. Deprecated FHIR STU3 is `v1`.
+   (Note, the AUTHENTICATION_URL is still v1 for all API versions)
 
    *Sandbox FHIR R4 (working example, for FHIR STU3, replace v2 with v1 in `AB2D_API_URL`):*
 
@@ -179,6 +196,21 @@ Example in powershell:
    
    # If you only want claims data updated or filed before a specific date use the $UNTIL parameter
    $UNTIL='2024-02-13T00:00:00.000-05:00'
+   ```
+
+   *Sandbox FHIR R4 using V3 (working example):*
+
+   ```ShellSession
+   $AUTH_FILE="{credentials-file}"
+   $AUTHENTICATION_URL='https://test.idp.idm.cms.gov/oauth2/aus2r7y3gdaFMKBol297/v1/token'
+   $AB2D_API_URL='https://sandbox.ab2d.cms.gov/api/v3'
+
+   # If you only want claims data updated or filed after a specific date use the $SINCE parameter
+   # For V3 the earliest accepted date is 2026-03-26T00:00:00.000-05:00
+   $SINCE='2026-03-26T00:00:00.000-05:00'
+
+   # If you only want claims data with a service date in a certain range use the $SERVICE_DATE parameter
+   $SERVICE_DATE='gt2026-01-01,lt2026-02-01'
    ```
 
    *Production FHIR R4 (replace {variable} with your settings, for FHIR STU3, replace v2 with v1 in `AB2D_API_URL`):*
